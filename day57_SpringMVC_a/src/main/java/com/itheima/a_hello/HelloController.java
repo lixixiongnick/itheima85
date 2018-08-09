@@ -15,6 +15,7 @@ public class HelloController {
     @RequestMapping("/hello.do")
     public String hello(){
         System.out.println("飞哥");
+        System.out.println("A程序员上传代码了,大家注意");
         return "success";
     }
     @RequestMapping("/save.do")
