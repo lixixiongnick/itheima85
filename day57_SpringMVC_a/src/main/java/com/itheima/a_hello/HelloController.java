@@ -18,6 +18,7 @@ public class HelloController {
         System.out.println("A程序员上传代码了,大家注意");
         System.out.println("B程序员上传代码了,大家.....");
         System.out.println("这个月天气都不错");
+        System.out.println("今天天气不错");
         return "success";
     }
     @RequestMapping("/save.do")
