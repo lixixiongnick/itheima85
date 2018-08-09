@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.dao.IRserDao">
+<!--    <sql id="SelectUserCommit">
+          SELECT * FROM USER
+    </sql>
+    <select id="findByCondition" parameterType="queryVo" resultType="user">
+    <include refid="SelectUserCommit"></include>
+        /*if条件判断*/
+       &lt;!&ndash; <if test="user.username != null">
+            AND username = #{user.username}
+        </if>
+        <if test="user.address != null">
+            AND address = #{user.address}
+        </if>&ndash;&gt;
+        <where>
+            <if test="user.username != null">
+                AND username = #{user.username}
+            </if>
+            <if test="user.address != null">
+                AND address = #{user.address}
+            </if>
+
+            <if test="ids != null and ids.size()>0">
+
+                <foreach collection="ids" open="and id IN(" item="id_" separator="," close=")">
+                    #{id_}
+                </foreach>
+            </if>
+        </where>
+    </select>-->
+    <!--封装UserResultMap结果集,映射列表名称 -->
+    <resultMap id="UserResultMap" type="user">
+        <id property="id" column="id"></id>
+        <result property="username" column="username"></result>
+        <result property="birthday" column="birthday"></result>
+        <result property="sex" column="sex"></result>
+        <result property="address" column="address"></result>
+        <collection property="accounts" ofType="account">
+            <id property="accountId" column="accountId"></id>
+            <result property="uid" column="uid"></result>
+            <result property="money" column="money"></result>
+        </collection>
+    </resultMap>
+    <select id="findByAccount" resultMap="UserResultMap">
+        SELECT * FROM USER u LEFT JOIN account c on u.id = c.uid
+    </select>
+    <resultMap id="UserResultMap1" type="user">
+        <id property="id" column="id"></id>
+        <result property="username" column="username"></result>
+        <result property="birthday" column="birthday"></result>
+        <result property="sex" column="sex"></result>
+        <result property="address" column="address"></result>
+        <collection property="Roles" ofType="role" column="roleId">
+            <id property="roleId" column="roleId"></id>
+            <result property="roleName" column="roleName"></result>
+            <result property="roleDesc" column="roleDesc"></result>
+        </collection>
+    </resultMap>
+<select id="findByRole" resultMap="UserResultMap1">
+select u.*,r.ID roleId,
+r.ROLE_NAME roleName,
+r.ROLE_DESC roleDesc from
+ user u inner join user_role ur on u.`id`= ur.`UID` inner join role r on r.`ID`=ur.`RID`
+</select>
+</mapper>
